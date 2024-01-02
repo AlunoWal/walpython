@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container">
+        <div  style="text-align: center" >
+            <h3 style="color: Blue">Familia Costa da Silva</h3>
+        </div>
+        <hr>
+        {% for post in posts %}
+            <div class="row border mt-4 p-2 meupost">
+                <div class="col col-3">
+                    <img src="{{url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" class="rounded" width="200">
+                    {{ post.autor.username }}
+                </div>
+                <div   style="color: Gray" class="col col-9">
+                    <<a style="text-decoration: none" href="{{url_for('exibir_post', post_id=post.id)}}"><h4>{{ post.titulo }}</h4></a>
+                    {% if '.' in post.corpo %}
+                        <p></p>
+                    {% endif %}
+                    <p>{{ post.corpo }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
