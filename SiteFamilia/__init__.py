@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
@@ -7,7 +8,10 @@ from flask_login import LoginManager
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '29cecf8afd6176f06bb3f55472d490d1'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+if os.getenv("DATABASE.URL"):
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE.URL")
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
 database = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -17,5 +21,8 @@ login_manager.login_message_category = 'alert-info'
 
 
 from SiteFamilia import routes
+
+
+
 
 
